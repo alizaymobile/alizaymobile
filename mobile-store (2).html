@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alizay Mobile – New phones, honest prices</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c15;--ink:#eef1f6;--mut:#9aa6b8;--card:rgba(255,255,255,.07);--blue:#4f6bff;--lime:#dff25a;--line:rgba(255,255,255,.14);--c1:#2b4cff;--c2:#16202e}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font-family:Figtree,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+h1,h2,h3{font-family:'Cormorant Garamond',Figtree,sans-serif;line-height:1.1;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:auto;padding:0 20px}
+section{padding:80px 0}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:12px}
+.sub{color:var(--mut);max-width:52ch;margin-bottom:36px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.btn{display:inline-block;background:var(--blue);color:#fff;border:0;padding:14px 26px;border-radius:999px;font:600 1rem Figtree;cursor:pointer;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.alt{background:var(--lime);color:#16202e}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:800 1.3rem 'Cormorant Garamond'}
+.logo span{color:var(--blue)}
+nav ul{display:flex;gap:26px;list-style:none;padding:0;align-items:center}
+nav a{font-weight:500;color:var(--mut)}nav a:hover{color:var(--ink)}
+.cart{background:var(--ink);color:var(--bg);border-radius:999px;padding:6px 14px;font-weight:600;font-size:.9rem}
+.burger{display:none;background:none;border:0;font-size:1.6rem;color:var(--ink);cursor:pointer}
+/* hero */
+.hero{padding:56px 0 80px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,7vw,4.8rem);font-weight:800;margin-bottom:18px}
+.hero p{color:var(--mut);font-size:1.15rem;max-width:44ch;margin-bottom:28px}
+.sw{display:flex;align-items:center;gap:12px;margin-top:30px;font-weight:500;color:var(--mut)}
+.sw button{width:32px;height:32px;border-radius:50%;border:3px solid var(--bg);box-shadow:0 0 0 2px var(--line);cursor:pointer}
+.sw button[aria-pressed=true]{box-shadow:0 0 0 2px var(--ink)}
+.stage{display:grid;place-items:center;min-height:420px;background:var(--lime);border-radius:36px;position:relative;overflow:hidden}
+.phone{width:200px;height:400px;border-radius:38px;background:var(--c2);padding:10px;box-shadow:0 30px 50px -20px rgba(0,0,0,.4);transform:rotate(-6deg);transition:background .5s}
+.phone i{display:block;width:100%;height:100%;border-radius:30px;background:linear-gradient(160deg,var(--c1),#0a0f1a);position:relative;transition:background .5s}
+.phone i::before{content:"";position:absolute;top:10px;left:50%;width:56px;height:16px;margin-left:-28px;border-radius:9px;background:#000}
+.phone b{position:absolute;bottom:26px;left:0;right:0;text-align:center;color:#fff;font:600 2.6rem 'Cormorant Garamond'}
+.phone small{position:absolute;top:60px;left:0;right:0;text-align:center;color:#ffffffaa;font-size:.8rem}
+/* features */
+.grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
+.feat .ic{font-size:1.8rem;margin-bottom:10px}
+.feat h3{font-size:1.15rem;margin-bottom:6px}
+.feat p{color:var(--mut);font-size:.95rem}
+/* products */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.filters button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 18px;border-radius:999px;font:500 .95rem Figtree;cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.prod{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column}
+.pic{height:170px;border-radius:14px;display:grid;place-items:center;margin-bottom:14px;position:relative;overflow:hidden}
+.pic{perspective:600px}
+.pic svg{width:80%;height:100%;transition:transform .35s}
+.prod:hover .pic svg{transform:rotateY(-14deg) rotateX(6deg) scale(1.07)}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:8px}
+.pic .ico{font-style:normal;font-size:3.4rem}
+.pic span{width:70px;height:132px;border-radius:14px;background:#0d121b;border:3px solid #ffffff55;box-shadow:inset 0 0 0 4px #0d121b}
+.prod small{color:var(--mut)}
+.prod h3{font-size:1.15rem;margin:2px 0 6px}
+.prod .row{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:12px}
+.price{font-weight:600}
+.add{background:var(--ink);color:var(--bg);border:0;border-radius:999px;padding:8px 16px;font:600 .9rem Figtree;cursor:pointer}
+.add:hover{background:var(--blue);color:#fff}
+
+body{background:radial-gradient(900px 520px at 12% -8%,#2b4cff55,transparent),radial-gradient(700px 520px at 100% 25%,#9b7bff40,transparent),radial-gradient(600px 400px at 0% 85%,#1f9d6b30,transparent),var(--bg);background-attachment:fixed}
+.feat,.q,form{backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 #ffffff30}
+.bs{margin-top:46px}
+.bh{font-size:1.5rem;margin-bottom:16px}
+.bh small{display:block;font:400 .95rem Figtree;color:var(--mut);margin-top:4px}
+.products{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.prod{position:relative;background:linear-gradient(145deg,#ffffff24,#ffffff08 55%,#ffffff12);backdrop-filter:blur(16px);border:1px solid #ffffff2e;box-shadow:0 20px 40px -18px #000c,inset 0 1px 0 #ffffff55;transition:transform .15s ease-out,box-shadow .3s;will-change:transform}
+.prod:hover{box-shadow:0 28px 60px -18px #000,0 0 36px -8px #4f6bff88,inset 0 1px 0 #fff8}
+.tag{position:absolute;top:12px;left:12px;z-index:2;background:#000a;border:1px solid #ffffff40;backdrop-filter:blur(6px);color:#fff;font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:999px}
+.pics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pic{height:150px;margin:0;background:radial-gradient(circle at 30% 15%,#ffffff30,#ffffff08 70%);border:1px solid #ffffff1c}
+.pic svg{width:92%}
+.pic.box::after{content:"Retail box";position:absolute;bottom:6px;right:10px;font-size:.7rem;color:var(--mut)}
+.prod:hover .pic svg{transform:none}
+.buy{background:linear-gradient(135deg,#2b4cff,#9b7bff);color:#fff;border-radius:999px;padding:9px 20px;font-weight:600;font-size:.92rem;box-shadow:0 0 18px #4f6bffaa;transition:box-shadow .2s,transform .2s}
+.buy:hover{box-shadow:0 0 30px #8fa0ff;transform:translateY(-2px)}
+.fl{display:flex;flex-wrap:wrap;gap:8px}.fl a{border:1px solid var(--line);background:var(--card);padding:8px 18px;border-radius:999px;font-weight:500}.fl a:hover{background:var(--blue);color:#fff}
+
+dialog{border:1px solid #ffffff30;border-radius:24px;background:linear-gradient(145deg,#1d2640f2,#0a0f1cf5);color:var(--ink);padding:0;width:min(960px,94vw);max-height:92vh;overflow:auto;box-shadow:0 40px 90px -20px #000,0 0 60px -20px #4f6bff,inset 0 1px 0 #ffffff40}
+dialog::backdrop{background:#000b;backdrop-filter:blur(6px)}
+dialog[open]{animation:pop .28s ease}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.96)}}
+.x{position:sticky;top:10px;float:right;margin:10px 12px 0 0;width:38px;height:38px;border-radius:50%;border:1px solid #ffffff40;background:#0008;color:#fff;font-size:1.3rem;cursor:pointer;z-index:3}
+.pm{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:28px}
+.main{height:320px;border-radius:20px;background:radial-gradient(circle at 30% 15%,#ffffff33,#ffffff08 70%);border:1px solid #ffffff22;position:relative;display:grid;place-items:center;overflow:hidden}
+.main svg{width:86%;height:100%}.main img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:10px}
+.th{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.th button{width:76px;height:64px;border-radius:12px;border:2px solid #ffffff25;background:#ffffff10;cursor:pointer;padding:2px;color:var(--ink);font:500 .72rem Figtree}
+.th button[aria-pressed=true]{border-color:var(--blue);box-shadow:0 0 14px #4f6bff99}
+.th svg{width:100%;height:42px}
+.pi h2{font-size:1.9rem;margin:8px 0}
+.pi h4{margin:16px 0 6px;font-size:1rem}
+.pi ul{padding-left:18px;color:var(--mut)}
+.mut{color:var(--mut)}
+.pr{font:800 1.9rem 'Cormorant Garamond';margin:10px 0 2px}
+.pr small{font:500 .9rem Figtree;color:var(--mut);display:block}
+table.sp{width:100%;border-collapse:collapse;font-size:.92rem}
+.sp td{padding:7px 0;border-bottom:1px solid var(--line)}.sp td:first-child{color:var(--mut);width:40%}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;margin:16px 12px 0 0}
+.qty button{background:none;border:0;color:var(--ink);width:36px;height:38px;font-size:1.2rem;cursor:pointer}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.acts .btn{padding:12px 22px}
+.btn.ghost{background:#ffffff14;border:1px solid #ffffff40;color:var(--ink)}
+.pad{padding:26px}
+.pad h2{margin-bottom:14px}
+#dCart{margin:0 0 0 auto;height:100vh;max-height:100vh;border-radius:24px 0 0 24px;width:min(440px,100vw);animation:slide .3s ease}
+@keyframes slide{from{transform:translateX(60px);opacity:0}}
+.ci{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.ci small{color:var(--mut)}
+.ci .qty{margin:6px 0 0}
+.tot{display:flex;justify-content:space-between;font:800 1.3rem 'Cormorant Garamond';margin:16px 0}
+#dOut,#dRcpt,#dPin{width:min(560px,94vw)}
+#dAdmin{width:min(1000px,96vw)}
+.fg{display:grid;gap:12px}
+.pay{display:flex;gap:10px;flex-wrap:wrap}.pay label{flex:1;display:flex;flex-direction:row;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer}
+.err{color:#ff8a8a;font-size:.9rem;min-height:1.2em}
+.ok{width:64px;height:64px;border-radius:50%;background:#1f9d6b;display:grid;place-items:center;font-size:2rem;margin:0 auto 10px;box-shadow:0 0 30px #1f9d6b99;animation:pop .5s ease}
+.rc{text-align:center}.rc .id{font:800 1.5rem 'Cormorant Garamond';letter-spacing:.04em}
+.rl{text-align:left;margin:14px 0}.rl div{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line);gap:12px}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.st div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}.st b{display:block;font:800 1.5rem 'Cormorant Garamond'}
+.od{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;display:grid;gap:6px}
+.od header{position:static;background:none;border:0;backdrop-filter:none;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.od select{padding:6px 10px;border-radius:10px}
+.ab{background:#e4572e;color:#fff;border-radius:999px;font-size:.72rem;padding:1px 7px;margin-left:6px}.ab:empty{display:none}
+.cart{border:0;cursor:pointer;font-family:inherit}
+#cur{padding:5px 8px;border-radius:10px}
+.prod{cursor:pointer}
+@media (max-width:760px){.pm{grid-template-columns:1fr;padding:18px}.main{height:260px}.st{grid-template-columns:1fr}}
+@media print{body>*:not(#dRcpt){display:none!important}dialog{box-shadow:none;color:#000;background:#fff}.x,.acts{display:none}}
+/* testimonials */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px}
+.q:nth-child(2){background:var(--blue);color:#fff;border-color:var(--blue)}
+.q:nth-child(2) small{color:#ffffffbb}
+.q p{margin:10px 0 16px}
+.stars{color:#f5a623;letter-spacing:2px}
+.q small{color:var(--mut)}
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1.1fr;gap:40px}
+.info p{margin-bottom:10px;color:var(--mut)}
+form{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;display:grid;gap:14px}
+label{font-weight:500;font-size:.92rem;display:grid;gap:6px}
+input,textarea,select{font:1rem Figtree;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+textarea{min-height:110px;resize:vertical}
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;color:var(--mut)}
+.social{display:flex;gap:10px}
+.social a{width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-weight:600;color:var(--ink)}
+.social a:hover{background:var(--blue);color:#fff}
+#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,120px);background:var(--ink);color:var(--bg);padding:12px 22px;border-radius:999px;transition:transform .3s;z-index:50}
+#toast.on{transform:translate(-50%,0)}
+@media (max-width:900px){
+ .hero .wrap,.contact{grid-template-columns:1fr}
+ .grid4{grid-template-columns:1fr}.quotes{grid-template-columns:1fr}
+ .burger{display:block}
+ nav ul{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg);flex-direction:column;padding:20px;border-bottom:1px solid var(--line)}
+ nav ul.open{display:flex}
+}
+@media (max-width:520px){.grid4{grid-template-columns:1fr}section{padding:56px 0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.tabs{display:flex;gap:8px;margin:0 0 18px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 20px;border-radius:999px;font:600 .95rem Figtree;cursor:pointer}
+.tabs button[aria-pressed=true]{background:linear-gradient(135deg,#f6dfa6,#c9993f);color:#1a1305;border-color:transparent}
+.vb,.sws{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.vb button{border:1px solid var(--line);background:#ffffff0d;color:var(--ink);padding:8px 16px;border-radius:12px;font:600 .9rem Figtree;cursor:pointer}
+.vb button[aria-pressed=true],.sws button[aria-pressed=true]{border-color:var(--gold);box-shadow:0 0 14px #e7c68088}
+.sws button{width:36px;height:36px;border-radius:50%;border:2px solid #ffffff55;cursor:pointer}
+.lab{font-weight:600;margin-top:14px;display:block}
+.fab{position:fixed;left:16px;bottom:16px;z-index:15;background:#000b;color:var(--gold);border:1px solid var(--gold);backdrop-filter:blur(10px);border-radius:999px;padding:9px 16px;font:600 .88rem Figtree;cursor:pointer;box-shadow:0 0 20px #e7c68044}
+.pl{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.pl small{color:var(--mut)}
+.pl button,.od button{cursor:pointer}
+.sm{background:#ffffff12;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:6px 12px;font:500 .85rem Figtree}
+.sm.red{color:#ff8a8a}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg2 .w{grid-column:1/-1}
+.prod.oos .pics{opacity:.5}
+.dots{display:flex;gap:5px;margin-top:6px}.dots i{width:12px;height:12px;border-radius:50%;border:1px solid #ffffff66}
+@media (max-width:600px){.fg2{grid-template-columns:1fr}}
+/* luxury */
+:root{--bg:#07080b;--gold:#e7c680;--blue:#e7c680;--lime:#e7c680;--card:rgba(255,255,255,.05);--line:rgba(231,198,128,.24)}
+body{background:radial-gradient(900px 520px at 12% -8%,#e7c68024,transparent),radial-gradient(700px 520px at 100% 25%,#7a5bff1f,transparent),radial-gradient(600px 400px at 0% 85%,#e7c68014,transparent),var(--bg);background-attachment:fixed}
+h1,h2,h3,.logo,.pr,.tot,.rc .id,.st b{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700}
+h2{font-size:clamp(2rem,4.5vw,3rem)}
+.hero h1{font-size:clamp(3rem,8vw,5.6rem);background:linear-gradient(120deg,#fff 15%,#e7c680 50%,#fff 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn,.buy{background:linear-gradient(135deg,#f6dfa6,#c9993f 55%,#9a6f22);color:#1a1305!important;box-shadow:0 0 22px #e7c68055,inset 0 1px 0 #fff8}
+.btn.alt,.btn.ghost{background:transparent!important;color:var(--gold)!important;border:1px solid var(--gold);box-shadow:none}
+.btn:hover,.buy:hover{box-shadow:0 0 34px #e7c680aa,inset 0 1px 0 #fff9}
+.btn[disabled],.buy[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
+.cart{background:linear-gradient(135deg,#f6dfa6,#c9993f);color:#1a1305}
+.stage{background:radial-gradient(circle at 50% 35%,#e7c68044,#0d0f14 70%);border:1px solid var(--line);box-shadow:inset 0 1px 0 #ffffff30,0 30px 80px -30px #e7c680}
+.prod{border-color:#e7c68047;overflow:hidden}
+.prod:hover{border-color:var(--gold);box-shadow:0 28px 60px -18px #000,0 0 40px -6px #e7c68088,inset 0 1px 0 #fff8}
+.prod::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,#ffffff26 50%,transparent 60%);transform:translateX(-120%);transition:transform .7s;pointer-events:none}
+.prod:hover::after{transform:translateX(120%)}
+.fl a:hover{color:#1a1305}
+.q:nth-child(2){background:linear-gradient(145deg,#e7c68033,#ffffff08);color:var(--ink);border-color:var(--gold)}
+.q:nth-child(2) small{color:var(--mut)}
+.feat{border-color:#e7c68038}
+.tabs button:hover,.fl a:hover{box-shadow:0 0 16px #e7c68066}
+@media (prefers-reduced-motion:reduce){.prod::after{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="shine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".38"/></linearGradient></defs></svg>
+<header><div class="wrap nav">
+ <a class="logo" href="#top">Alizay<span>Mobile</span></a>
+ <nav aria-label="Main"><ul id="menu">
+  <li><a href="#why">Why us</a></li><li><a href="#shop">Shop</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#contact">Contact</a></li>
+  <li><select id="cur" aria-label="Currency"><option>PKR</option><option>USD</option><option>INR</option></select></li>
+  <li><button class="cart" id="cb" type="button">Cart (<span id="cc">0</span>)</button></li>
+ </ul></nav>
+ <button class="burger" id="burger" aria-label="Open menu">☰</button>
+</div></header>
+
+<main id="top">
+<section class="hero"><div class="wrap">
+ <div>
+  <h1>Your next phone, without the markup.</h1>
+  <p>Sealed-box iPhones, Xiaomi, Redmi and Infinix phones, plus Baseus, Joyroom, Redragon and Bloody accessories, with PTA approval, a real warranty and in-store repair.</p>
+  <a class="btn" href="#shop">Browse phones</a> <a class="btn alt" href="#contact">Ask a question</a>
+  <div class="sw" id="sw">Pick a finish:
+   <button style="background:#2b4cff" data-a="#2b4cff" data-b="#16202e" aria-label="Cobalt" aria-pressed="true"></button>
+   <button style="background:#e4572e" data-a="#e4572e" data-b="#3a1d14" aria-label="Ember" aria-pressed="false"></button>
+   <button style="background:#1f9d6b" data-a="#1f9d6b" data-b="#0f3d2c" aria-label="Forest" aria-pressed="false"></button>
+   <button style="background:#9b7bff" data-a="#9b7bff" data-b="#2a1f4d" aria-label="Violet" aria-pressed="false"></button>
+  </div>
+ </div>
+ <div class="stage"><div class="phone"><i><small>Tuesday</small><b>9:41</b></i></div></div>
+</div></section>
+
+<section id="why"><div class="wrap">
+ <h2>Buy once, stress never.</h2>
+ <p class="sub">Everything we do is built around making a big purchase feel safe.</p>
+ <div class="grid4">
+  <div class="feat"><div class="ic">✅</div><h3>PTA approved</h3><p>Every handset is registered and ready to use with any local network.</p></div>
+  <div class="feat"><div class="ic">🛡️</div><h3>Real warranty</h3><p>Brand-backed cover on every phone, with a paper receipt you can keep.</p></div>
+  <div class="feat"><div class="ic">🔧</div><h3>In-store repair</h3><p>Screens and batteries swapped while you wait, usually within an hour.</p></div>
+ </div>
+</div></section>
+
+<section id="shop"><div class="wrap">
+ <h2>The Alizay collection</h2>
+ <p class="sub">Apple, Xiaomi, Redmi, Infinix, Baseus, Joyroom, Redragon, Bloody and Airport Tech. Tap any product to choose storage and color.</p>
+ <div class="fl" id="fl"></div>
+ <div id="grid"></div>
+</div></section>
+
+<section id="reviews"><div class="wrap">
+ <h2>What customers say</h2>
+ <p class="sub">Real words from people who walked out with a new phone.</p>
+ <div class="quotes">
+  <div class="q"><div class="stars">★★★★★</div><p>Price matched the online listing and the box was sealed. They set up my WhatsApp transfer too.</p><small>Hamza R., Gulberg</small></div>
+  <div class="q"><div class="stars">★★★★★</div><p>My screen cracked on Monday and was replaced by lunch. No surprise charges at the counter.</p><small>Ayesha K., Model Town</small></div>
+  <div class="q"><div class="stars">★★★★☆</div><p>Staff compared three phones with me and never pushed the expensive one. Honest advice.</p><small>Usman T., Johar Town</small></div>
+ </div>
+</div></section>
+
+<section id="contact"><div class="wrap contact">
+ <div class="info">
+  <h2>Visit or message us</h2>
+  <p class="sub">Tell us what you’re looking for and we’ll reply the same day.</p>
+  <p><strong>Shop:</strong> Shops G3 and G13, Eagle Mall, Bahria Town, Lahore</p>
+  <p><strong>Hours:</strong> Mon to Sat, 11am to 9pm</p>
+  <p><strong>Phone:</strong> <a href="tel:+923291034308">0329 1034308</a></p>
+  <p><strong>CEO:</strong> Rehan Sheikh</p>
+ </div>
+ <form id="form" novalidate>
+  <label>Name<input name="n" required autocomplete="name"></label>
+  <label>Email or phone<input name="e" required autocomplete="email"></label>
+  <label>I’m interested in<select name="s"><option>A new phone</option><option>Repair</option><option>Trade-in</option></select></label>
+  <label>Message<textarea name="m"></textarea></label>
+  <button class="btn" type="submit">Send message</button>
+ </form>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+ <span>© 2026 Alizay Mobile. All rights reserved.</span>
+ <div class="social">
+  <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">in</a><a href="#" aria-label="WhatsApp">wa</a><a href="#" aria-label="YouTube">yt</a>
+ </div>
+</div></footer>
+<div id="toast" role="status"></div>
+<button id="adm" class="fab" type="button">⚙ Admin<span class="ab" id="ab"></span></button>
+<dialog id="dProd" aria-label="Product details"></dialog>
+<dialog id="dCart" aria-label="Cart"></dialog>
+<dialog id="dOut" aria-label="Checkout"><button class="x" data-x aria-label="Close">×</button><div class="pad"><h2>Checkout</h2>
+ <form id="fo" class="fg" novalidate>
+  <label>Full name<input name="cn" required autocomplete="name"></label>
+  <label>Phone number<input name="cp" required type="tel" autocomplete="tel" placeholder="03XX XXXXXXX"></label>
+  <label>Delivery address<textarea name="ca" required autocomplete="street-address"></textarea></label>
+  <label>City / location<select name="cl"><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option><option>Peshawar</option><option>Mumbai</option><option>Delhi</option><option>Other</option></select></label>
+  <div class="pay" role="radiogroup" aria-label="Payment method"><label><input type="radio" name="pm" value="Cash on Delivery" checked> Cash on Delivery</label><label><input type="radio" name="pm" value="Card"> Card</label></div>
+  <small class="mut" id="cn">Card payments are confirmed with you by phone or WhatsApp. Never enter card details on this page.</small>
+  <div id="osum"></div><div class="err" id="oerr" role="alert"></div>
+  <button class="btn" type="submit">Place order</button>
+ </form></div></dialog>
+<dialog id="dRcpt" aria-label="Order receipt"></dialog>
+<dialog id="dPin" aria-label="Admin sign in"><button class="x" data-x aria-label="Close">×</button><div class="pad"><h2>Admin sign in</h2>
+ <form id="fp" class="fg"><label>PIN<input name="pin" type="password" inputmode="numeric" autocomplete="off"></label><div class="err" id="perr" role="alert"></div><button class="btn" type="submit">Open dashboard</button></form></div></dialog>
+<dialog id="dAdmin" aria-label="Order dashboard"></dialog>
+
+
+<script>
+const $=s=>document.querySelector(s);
+const S=(t,a,c)=>`<${t} ${a} fill="${c}"/><${t} ${a} fill="url(#shine)"/>`;
+const T={
+ phone:c=>S("rect",'x="30" y="14" width="52" height="112" rx="12"',c)+[[44,30],[44,46],[60,38]].map(q=>`<circle cx="${q[0]}" cy="${q[1]}" r="7" fill="#0d121b" stroke="#fff" stroke-opacity=".4" stroke-width="2"/>`).join("")+`<rect x="80" y="24" width="54" height="108" rx="12" fill="#0d121b"/>`+S("rect",'x="84" y="28" width="46" height="100" rx="9"',c)+`<rect x="99" y="32" width="16" height="5" rx="2.5" fill="#0d121b"/>`,
+ buds:c=>S("rect",'x="22" y="64" width="62" height="48" rx="18"',c)+`<path d="M22 84H84" stroke="#0d121b" stroke-opacity=".35" stroke-width="2"/>`+[104,130].map(x=>S("ellipse",`cx="${x}" cy="60" rx="11" ry="15"`,"#f1f3f7")+S("rect",`x="${x-3}" y="68" width="6" height="30" rx="3"`,"#f1f3f7")).join(""),
+ handsfree:c=>`<path d="M44 116C44 20 116 20 116 116" fill="none" stroke="#e4e8ef" stroke-width="3.5"/>`+S("rect",'x="42" y="58" width="12" height="22" rx="4"',c)+[44,116].map(x=>S("ellipse",`cx="${x}" cy="122" rx="9" ry="11"`,c)).join(""),
+ headphones:(c,boom)=>`<path d="M38 96C38 14 122 14 122 96" fill="none" stroke="${c}" stroke-width="9" stroke-linecap="round"/><path d="M38 96C38 14 122 14 122 96" fill="none" stroke="url(#shine)" stroke-width="9" stroke-linecap="round"/>`+S("rect",'x="24" y="76" width="28" height="48" rx="13"',c)+S("rect",'x="108" y="76" width="28" height="48" rx="13"',c)+`<rect x="48" y="84" width="8" height="32" rx="4" fill="#0d121b" opacity=".75"/><rect x="104" y="84" width="8" height="32" rx="4" fill="#0d121b" opacity=".75"/>`+(boom?`<path d="M30 118C34 142 58 142 70 133" fill="none" stroke="#0d121b" stroke-width="3"/><circle cx="72" cy="132" r="4.5" fill="#0d121b"/>`:""),
+ charger:c=>`<rect x="64" y="24" width="8" height="18" rx="2" fill="#aab3c0"/><rect x="90" y="24" width="8" height="18" rx="2" fill="#aab3c0"/>`+S("rect",'x="48" y="40" width="64" height="62" rx="12"',"#eef1f6")+`<rect x="48" y="72" width="64" height="9" fill="${c}"/><rect x="68" y="94" width="24" height="6" rx="3" fill="#0d121b" opacity=".55"/>`,
+ bank:c=>S("rect",'x="42" y="26" width="76" height="100" rx="16"',c)+`<rect x="62" y="32" width="36" height="7" rx="3" fill="#0d121b" opacity=".7"/>`+[0,1,2,3].map(i=>`<circle cx="${59+i*14}" cy="62" r="4" fill="#dff25a"/>`).join("")+`<rect x="56" y="86" width="48" height="4" rx="2" fill="#fff" opacity=".6"/>`,
+ cable:c=>`<path d="M34 112C34 36 80 140 80 74S126 36 126 98" fill="none" stroke="#dfe3ea" stroke-width="6" stroke-linecap="round"/>`+S("rect",'x="22" y="108" width="24" height="16" rx="4"',c)+S("rect",'x="114" y="84" width="24" height="16" rx="4"',c),
+ mouse:(c,rgb)=>{const d='d="M52 56C52 22 108 22 108 56V98C108 128 52 128 52 98Z"';return S("path",d,c)+`<path d="M80 26V66" stroke="#0d121b" stroke-opacity=".5" stroke-width="2"/><rect x="76" y="36" width="8" height="18" rx="4" fill="#0d121b"/>`+(rgb?`<path d="M56 106C60 126 100 126 104 106" fill="none" stroke="#dff25a" stroke-width="3"/>`:"")},
+ keyboard:c=>S("rect",'x="12" y="46" width="136" height="66" rx="9"',c)+[0,1,2].map(r=>[...Array(10)].map((_,k)=>`<rect x="${20+k*12.4}" y="${54+r*13}" width="10" height="10" rx="2" fill="#f4f6fa"/>`).join("")).join("")+`<rect x="40" y="94" width="80" height="10" rx="3" fill="#f4f6fa"/>`,
+ case:c=>S("rect",'x="40" y="12" width="80" height="116" rx="20"',c)+`<rect x="46" y="18" width="68" height="104" rx="15" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><rect x="50" y="24" width="30" height="32" rx="9" fill="#0d121b"/><circle cx="60" cy="34" r="5" fill="#2a3547"/><circle cx="60" cy="47" r="5" fill="#2a3547"/><circle cx="71" cy="40" r="5" fill="#2a3547"/>`,
+ glass:c=>`<rect x="44" y="14" width="72" height="112" rx="14" fill="#9fd3ff" fill-opacity=".4" stroke="#fff" stroke-width="3"/><path d="M60 18H100L56 122H48Z" fill="#fff" opacity=".5"/><rect x="44" y="14" width="72" height="112" rx="14" fill="url(#shine)"/>`,
+ stand:c=>S("path",'d="M36 126H124L114 110H46Z"',c)+S("rect",'x="75" y="56" width="10" height="56" rx="4"',"#aab3c0")+`<path d="M48 66V42Q48 34 56 34H104Q112 34 112 42V66" fill="none" stroke="${c}" stroke-width="8" stroke-linecap="round"/>`
+};
+
+T.pro=c=>S("rect",'x="28" y="12" width="56" height="118" rx="14"',c)+`<rect x="33" y="17" width="32" height="36" rx="10" fill="#0d121b" opacity=".4"/>`+[[43,29],[43,43],[56,36]].map(q=>`<circle cx="${q[0]}" cy="${q[1]}" r="6.5" fill="#0d121b" stroke="#fff" stroke-opacity=".45" stroke-width="2"/>`).join("")+`<rect x="82" y="22" width="56" height="114" rx="14" fill="#0d121b"/>`+S("rect",'x="86" y="26" width="48" height="106" rx="11"',c)+`<rect x="101" y="30" width="18" height="6" rx="3" fill="#0d121b"/>`;
+T.watch=c=>`<rect x="62" y="6" width="36" height="136" rx="9" fill="#1b2433"/>`+S("rect",'x="46" y="38" width="68" height="76" rx="20"',c)+`<rect x="53" y="45" width="54" height="62" rx="14" fill="#0d121b"/><text x="80" y="82" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="15" fill="#fff">10:09</text><rect x="114" y="62" width="5" height="16" rx="2" fill="#aab3c0"/>`;
+T.box=(c,b)=>`<path d="M26 44L50 32H136L112 44Z" fill="#fff" opacity=".4"/><path d="M26 44H112V128H26Z" fill="${c}"/><path d="M26 44H112V128H26Z" fill="url(#shine)"/><path d="M112 44L136 32V116L112 128Z" fill="${c}"/><path d="M112 44L136 32V116L112 128Z" fill="#000" opacity=".4"/><text x="69" y="90" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="15" fill="#fff">${b}</text><rect x="46" y="100" width="46" height="3" rx="1.5" fill="#fff" opacity=".6"/>`;
+T.pfront=c=>`<rect x="44" y="8" width="72" height="130" rx="16" fill="#0d121b"/>`+S("rect",'x="48" y="12" width="64" height="122" rx="13"',c)+`<rect x="68" y="18" width="24" height="7" rx="3.5" fill="#0d121b"/>`;
+T.pback=c=>S("rect",'x="44" y="8" width="72" height="130" rx="16"',c)+`<rect x="50" y="14" width="40" height="42" rx="11" fill="#0d121b" opacity=".4"/>`+[[61,28],[61,44],[77,36]].map(q=>`<circle cx="${q[0]}" cy="${q[1]}" r="8" fill="#0d121b" stroke="#fff" stroke-opacity=".45" stroke-width="2"/>`).join("")+`<circle cx="80" cy="96" r="9" fill="#fff" opacity=".35"/>`;
+T.pside=c=>S("rect",'x="73" y="8" width="14" height="130" rx="7"',c)+`<rect x="69" y="38" width="4" height="14" rx="2" fill="#aab3c0"/><rect x="69" y="58" width="4" height="22" rx="2" fill="#aab3c0"/><rect x="87" y="52" width="4" height="26" rx="2" fill="#aab3c0"/>`;
+const wrap=b=>`<svg viewBox="0 0 160 150" aria-hidden="true"><ellipse cx="80" cy="138" rx="46" ry="6" fill="#000" opacity=".3"/>${b}</svg>`;
+function art(k,c){const b=k=="gh"?T.headphones(c,1):k=="gm"?T.mouse(c,1):T[k](c);return wrap(b)}
+const ls={g(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){alert("Browser storage is full. Use image links instead of uploads, or remove some images.");return false}}};
+const D=id=>document.getElementById(id);
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const slug=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,"-");
+const CUR={PKR:{s:"Rs",r:1},USD:{s:"$",r:.0036},INR:{s:"₹",r:.31}}; // approximate rates
+let cc=ls.g("alz_cur","PKR");
+const money=(n,c)=>{c=c||cc;const x=CUR[c];return x.s+" "+Math.round(n*x.r).toLocaleString("en-PK")};
+const BR=[["Apple","Apple iPhones","Phones with their official retail packaging"],["Xiaomi","Xiaomi","Mi smartphones"],["Redmi","Redmi","Value-packed smartphones"],["Infinix","Infinix","Smartphones for every budget"],["Baseus","Baseus","Fast chargers, premium cases, covers and tech accessories"],["Joyroom","Joyroom","Earbuds, power banks, chargers and cables"],["Redragon","Redragon gaming gear","Mechanical keyboards, gaming mice and headsets"],["Bloody","Bloody accessories","Gaming mice, keyboards and headsets"],["Airport","Airport Tech","Audio, power and charging accessories"]];
+const BN=b=>b=="Airport"?"Airport Tech":b;
+const KINDS=[["pro","Smartphone (iPhone style)"],["phone","Smartphone (Android style)"],["buds","Earbuds"],["handsfree","Handsfree"],["headphones","Headphones"],["bank","Power bank"],["charger","Charger"],["cable","Cable"],["watch","Smartwatch"],["keyboard","Keyboard"],["gm","Gaming mouse"],["mouse","Mouse"],["gh","Gaming headset"],["case","Case or cover"],["glass","Screen protector"],["stand","Phone stand"]];
+const KN=k=>(KINDS.find(x=>x[0]==k)||[0,"Accessory"])[1];
+const isPh=k=>k=="pro"||k=="phone";
+const BD={Apple:"Apple designs the iPhone. Phones sold here are PTA approved, sealed and come with their retail box.",Xiaomi:"Xiaomi (Mi) makes smartphones and smart devices with strong specs for the price.",Redmi:"Redmi is Xiaomi’s value line, known for big batteries and sharp displays.",Infinix:"Infinix makes affordable smartphones with large displays and batteries.",Baseus:"Baseus makes fast chargers, cables, cases and everyday tech accessories.",Joyroom:"Accessory brand known for fast chargers, power banks and wireless audio.",Redragon:"Gaming gear brand making mechanical keyboards, mice and headsets.",Bloody:"Gaming peripherals brand (A4Tech) making mice, keyboards and headsets.",Airport:"Audio, power and charging accessories for everyday use."};
+const KF={pro:["PTA approved with warranty","Sealed box with retail packaging","Pro-grade camera system","All-day battery life"],phone:["Brand warranty","Sealed box with retail packaging","Fast charging","Large, smooth display"],buds:["Bluetooth wireless audio","Charging case for extra battery","Built-in mic for calls","Touch controls"],handsfree:["Clear sound with mic","Tangle-resistant cable","In-line controls"],bank:["Fast charging output","Dual-port charging","Compact and portable","Overcharge protection"],charger:["Fast charging support","Compact design","Over-heat protection","Works with most phones"],cable:["Fast charging and data sync","Durable build","Works with most devices"],watch:["Bright display","Calls and notifications","Health and sports tracking"],keyboard:["Mechanical key switches","RGB backlight","Anti-ghosting keys"],gm:["Adjustable DPI sensor","RGB lighting","Programmable buttons"],mouse:["Precise sensor","Comfortable grip","Long battery life"],gh:["Surround-sound audio","Noise-cancelling mic","Soft cushioned ear cups"],headphones:["Wireless over-ear audio","Long battery life","Soft ear cushions"],case:["Shock-absorbing protection","Precise cutouts","Slim, grippy finish"],glass:["Scratch protection","Easy installation","Clear, bubble-free finish"],stand:["Stable base","Adjustable angle","Works with most phones"]};
+/* ---- default catalog (editable later in the Admin panel) ---- */
+const V=t=>t.split(",").map(x=>{const a=x.split(":");return [a[0],+a[1]]});
+const C=t=>t.split(",").map(x=>{const a=x.split(":");return [a[0],"#"+a[1],""]});
+let n_=0;const mk=(brand,name,specs,price,kind,acc,vars,cols,stat)=>({id:"d"+(++n_),brand,name,specs,price,kind,acc,stock:true,imgs:[],box:"",feat:"",vars:vars?V(vars):[],cols:cols?C(cols):[],stat:stat?V(stat):[]});
+const DEFAULTS=[
+ mk("Apple","iPhone 17 Pro Max","Display: 6.9″ Super Retina XDR, 1–120Hz\nChip: A19 Pro\nBody: Aluminum unibody\nBattery: Up to 39 hours video (Apple claim)\nCamera: Pro camera system\nConnectivity: 5G, eSIM, MagSafe\nSecurity: Face ID\nIn the box: Official retail box",499999,"pro","#e8742f","256GB:0,512GB:85001,1TB:150001","Cosmic Orange:e8742f,Deep Blue:2f3f66,Silver:d9dce1","PTA Approved:0,Non-PTA:-119999,JV:-119999"),
+ mk("Apple","iPhone 18 Pro Max","Display: 6.9″ Super Retina XDR\nChip: Latest Apple silicon\nCamera: Pro camera system\nConnectivity: 5G, eSIM, MagSafe\nSecurity: Face ID\nIn the box: Official retail box",580000,"pro","#6b1f35","256GB:0,512GB:110000,1TB:240000","Deep Burgundy:6b1f35,Natural Titanium:a8a39b,Space Black:1b1b1f,Desert Titanium:b59b7c","PTA Approved:0,Non-PTA:-160000,JV:-160000"),
+ mk("Xiaomi","Xiaomi 14T","6.67″ AMOLED, 120Hz, 5000mAh",139999,"phone","#1b1b1f","12GB/256GB:0,12GB/512GB:30000","Titan Black:1b1b1f,Titan Blue:3b6fb5,Titan Gray:8c9099"),
+ mk("Xiaomi","Poco X7","6.67″ AMOLED, 5110mAh",74999,"phone","#e8b923","8GB/256GB:0,12GB/512GB:20000","Yellow:e8b923,Black:1b1b1f,Green:3d8f6b"),
+ mk("Redmi","Redmi Note 14 Pro","6.67″ AMOLED, 200MP camera",84999,"phone","#2f6fb5","8GB/256GB:0,12GB/512GB:18000","Midnight Black:1b1b1f,Ocean Blue:2f6fb5,Coral Purple:9b7bff"),
+ mk("Redmi","Redmi Note 14","6.67″ AMOLED, 5500mAh",59999,"phone","#1f9d6b","6GB/128GB:0,8GB/256GB:9000","Midnight Black:1b1b1f,Mystic Green:1f9d6b"),
+ mk("Redmi","Redmi 14C","6.88″ display, 5160mAh",32999,"phone","#8fb89a","4GB/128GB:0,6GB/128GB:3500","Midnight Black:1b1b1f,Sage Green:8fb89a"),
+ mk("Infinix","Infinix Note 50","256GB, 8GB RAM, large battery",49999,"phone","#7a5bff","8GB/256GB:0,8GB/512GB:9000","Titanium Grey:8c9099,Enchanting Purple:7a5bff"),
+ mk("Infinix","Infinix Hot 50","6.78″ display, 5000mAh",39999,"phone","#3b6fb5","8GB/128GB:0,8GB/256GB:6000","Sleek Black:1b1b1f,Dreamy Purple:9b7bff,Vibrant Blue:3b6fb5"),
+ mk("Baseus","65W GaN Fast Charger","Type-C, 65W, multi-device",6999,"charger","#2b4cff"),
+ mk("Baseus","Premium Phone Case","Shock-absorbing, slim, most models",2499,"case","#16202e","","Black:16202e,Clear:cfd8ff,Navy:2b4cff"),
+ mk("Baseus","Magnetic Cover","Magnetic, wireless-charging friendly",2999,"case","#9b7bff","","Black:16202e,Purple:9b7bff"),
+ mk("Baseus","100W Charging Cable","Type-C to Type-C, braided, 1m",1999,"cable","#2b4cff"),
+ mk("Baseus","Power Bank 20000mAh","Fast charging, dual output",9999,"bank","#16202e"),
+ mk("Baseus","Car Phone Holder","Adjustable, stable grip",2499,"stand","#2b4cff"),
+ mk("Joyroom","Wireless Earbuds","Bluetooth, charging case",5999,"buds","#2b4cff"),
+ mk("Joyroom","Power Bank","10,000mAh, dual output",5499,"bank","#2b4cff"),
+ mk("Joyroom","20W Fast Charger","Type-C, fast charging",2499,"charger","#2b4cff"),
+ mk("Joyroom","Charging Cable","Type-C or Lightning, 1m",999,"cable","#2b4cff"),
+ mk("Redragon","Mechanical Keyboard","Mechanical switches, RGB",9999,"keyboard","#d62839"),
+ mk("Redragon","Gaming Mouse","RGB, adjustable DPI",3999,"gm","#d62839"),
+ mk("Redragon","Gaming Headset","Surround sound, mic",8999,"gh","#d62839"),
+ mk("Bloody","Gaming Mouse","Optical sensor, RGB",5499,"gm","#f5a623"),
+ mk("Bloody","Gaming Keyboard","Mechanical, RGB",8499,"keyboard","#f5a623"),
+ mk("Bloody","Gaming Headset","Surround sound, mic",7999,"gh","#f5a623"),
+ mk("Airport","Wireless Earbuds","Bluetooth, charging case",3499,"buds","#9b7bff"),
+ mk("Airport","Bluetooth Headphones","Over-ear, long battery",4999,"headphones","#9b7bff"),
+ mk("Airport","Power Bank","10,000mAh",4499,"bank","#9b7bff"),
+ mk("Airport","Fast Charger","Type-C",1999,"charger","#9b7bff")
+];
+let PR=ls.g("alz_products",null)||JSON.parse(JSON.stringify(DEFAULTS));
+const savePR=()=>ls.s("alz_products",PR);
+const prod=id=>PR.find(p=>p.id==id);
+if(ls.g("alz_ver",0)<3){PR=PR.map(p=>(p.id=="d1"||p.id=="d2")?DEFAULTS.find(x=>x.id==p.id):p);ls.s("alz_ver",3);savePR()}
+PR.forEach(p=>{if(!p.stat)p.stat=[]});
+const conv=(p,x)=>`images/${slug(p.brand+"-"+p.name)}${x}.jpg`;
+const im=(u,a)=>`<img src="${esc(u)}" alt="${esc(a)}" loading="lazy" onerror="this.remove()">`;
+const sku=p=>"ALZ-"+p.brand.slice(0,3).toUpperCase()+"-"+p.id.slice(-3).toUpperCase();
+const boxBrand=p=>p.brand=="Airport"?"Airport":p.brand;
+const wa=()=>ls.g("alz_wa","923291034308");
+/* ---- storefront ---- */
+const card=p=>{const ok=p.stock!==false,pickv=(p.vars&&p.vars.length)||(p.cols&&p.cols.length);return `<article class="prod${ok?"":" oos"}" data-id="${p.id}" tabindex="0" role="button" aria-label="${esc(BN(p.brand))} ${esc(p.name)}, view details"><span class="tag">${esc(BN(p.brand))}</span>${ok?"":'<span class="tag" style="left:auto;right:12px;background:#7a1f1f">Out of stock</span>'}
+ <div class="pics"><div class="pic">${art(p.kind,p.acc)}${im((p.imgs&&p.imgs[0])||conv(p,""),p.name)}</div><div class="pic box">${wrap(T.box(p.acc,boxBrand(p)))}${im(p.box||conv(p,"-box"),p.name+" packaging")}</div></div>
+ <h3>${esc(p.name)}</h3><small style="color:var(--mut)">${esc((p.specs||"").split("\n")[0])}</small>${p.cols&&p.cols.length?`<div class="dots">${p.cols.map(c=>`<i style="background:${esc(c[1])}" title="${esc(c[0])}"></i>`).join("")}</div>`:""}
+ <div class="row"><span class="price">${p.vars&&p.vars.length>1?"From ":""}${money(p.price)}</span><button type="button" class="buy" data-p="${pickv?1:0}" style="border:0;cursor:pointer;font-family:inherit"${ok?"":" disabled"}>${ok?(pickv?"Choose":"Buy Now"):"Sold out"}</button></div></article>`};
+function renderGrid(){$("#grid").innerHTML=BR.map(b=>{const L=PR.filter(p=>p.brand==b[0]);return L.length?`<div class="bs" id="b-${b[0]}"><h3 class="bh">${b[1]}<small>${b[2]}</small></h3><div class="products">${L.map(card).join("")}</div></div>`:""}).join("")}
+$("#fl").innerHTML=BR.map(b=>`<a href="#b-${b[0]}">${b[1]}</a>`).join("");
+D("cur").value=cc;D("cur").onchange=e=>{cc=e.target.value;ls.s("alz_cur",cc);renderGrid()};
+$("#grid").addEventListener("click",e=>{const c=e.target.closest(".prod");if(!c)return;const b=e.target.closest(".buy");if(b&&b.dataset.p=="0"&&!b.disabled)buyNow(c.dataset.id,0,0,1);else openProd(c.dataset.id)});
+$("#grid").addEventListener("keydown",e=>{if(e.key=="Enter"&&e.target.classList.contains("prod"))openProd(e.target.dataset.id)});
+if(matchMedia("(hover:hover)").matches&&!matchMedia("(prefers-reduced-motion:reduce)").matches){
+ $("#grid").addEventListener("pointermove",e=>{const c=e.target.closest(".prod");if(!c)return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(800px) rotateY(${x*10}deg) rotateX(${-y*10}deg)`});
+ $("#grid").addEventListener("pointerout",e=>{const c=e.target.closest(".prod");if(c&&!c.contains(e.relatedTarget))c.style.transform=""});
+}
+document.addEventListener("click",e=>{const c=e.target.closest("[data-x]");if(c)c.closest("dialog").close();if(e.target.tagName=="DIALOG")e.target.close()});
+/* ---- cart ---- */
+let cart=ls.g("alz_cart",[]);
+const ck=c=>c.id+"|"+c.v+"|"+c.c+"|"+(c.s||0);
+const unit=c=>{const p=prod(c.id);return Math.max(0,p.price+((p.vars[c.v]||[0,0])[1])+(((p.stat||[])[c.s||0]||[0,0])[1]))};
+const iname=c=>{const p=prod(c.id),v=p.vars[c.v],o=p.cols[c.c],t=(p.stat||[])[c.s||0];return BN(p.brand)+" "+p.name+(v?" "+v[0]:"")+(o?" ("+o[0]+")":"")+(t?" ["+t[0]+"]":"")};
+const cnt=()=>cart.reduce((a,c)=>a+c.q,0),total=()=>cart.reduce((a,c)=>a+unit(c)*c.q,0);
+function saveCart(){cart=cart.filter(c=>prod(c.id));ls.s("alz_cart",cart);D("cc").textContent=cnt()}
+function addCart(id,v,c,q,t){t=t||0;const x=cart.find(y=>ck(y)==id+"|"+v+"|"+c+"|"+t);x?x.q=Math.min(20,x.q+q):cart.push({id,v,c,s:t,q});saveCart()}
+function buyNow(id,v,c,q,t){addCart(id,v,c,q,t);D("dProd").close();openCheckout()}
+/* ---- product modal with variants ---- */
+const specRows=p=>{const r=[["Brand",BN(p.brand)],["Category",KN(p.kind)],["Store code",sku(p)],["Availability",p.stock===false?"Out of stock":"In stock"]],h=[];(p.specs||"").split("\n").map(x=>x.trim()).filter(Boolean).forEach(l=>{const m=l.match(/^([^:]{1,30}):\s*(.+)$/);m?r.push([m[1],m[2]]):h.push(l)});if(h.length)r.push(["Highlights",h.join(", ")]);return r};
+function openProd(id){const p=prod(id);if(!p)return;const d=D("dProd"),vs=p.vars||[],cs=p.cols||[],ts=p.stat||[],ok=p.stock!==false;let sv=0,sc=0,st=0,q=1,vw=0;
+ const hex=()=>cs[sc]?cs[sc][1]:p.acc,pr=()=>Math.max(0,p.price+(vs[sv]?vs[sv][1]:0)+(ts[st]?ts[st][1]:0));
+ const views=()=>{const a=[];if(cs[sc]&&cs[sc][2])a.push({t:cs[sc][0],u:cs[sc][2]});(p.imgs||[]).forEach((u,k)=>a.push({t:"Photo "+(k+1),u}));a.push({t:"Product",art:1,u:(p.imgs&&p.imgs.length)?"":conv(p,"")});if(isPh(p.kind))a.push({t:"Front",a:"pfront"},{t:"Back",a:"pback"},{t:"Side",a:"pside"});a.push({t:"Packaging",box:1,u:p.box||conv(p,"-box")});return a};
+ const pic=v=>v.box?wrap(T.box(p.acc,boxBrand(p)))+im(v.u,p.name+" packaging"):v.a?wrap(T[v.a](hex())):art(p.kind,hex())+(v.u?im(v.u,p.name):"");
+ const th=v=>v.box?wrap(T.box(p.acc,boxBrand(p))):v.a?wrap(T[v.a](hex())):(v.art||!v.u)?art(p.kind,hex()):`<img src="${esc(v.u)}" alt="" style="width:100%;height:42px;object-fit:contain;background:#fff;border-radius:8px">`;
+ const feats=(p.feat?p.feat.split("\n").filter(Boolean):KF[p.kind])||[];
+ d.innerHTML=`<button class="x" data-x aria-label="Close">×</button><div class="pm"><div><div class="main" id="gm"></div><div class="th" id="th"></div></div>
+ <div class="pi"><span class="tag" style="position:static;display:inline-block">${esc(BN(p.brand))}</span><h2>${esc(p.name)}</h2><p class="mut">${esc(BD[p.brand]||"")}</p>
+ <div class="pr" id="pp"></div>
+ ${ts.length?`<span class="lab">Condition</span><div class="vb" id="sb">${ts.map((v,k)=>`<button type="button" data-st="${k}">${esc(v[0])}</button>`).join("")}</div>`:""}
+ ${vs.length?`<span class="lab">${isPh(p.kind)?"Storage / RAM":"Options"}</span><div class="vb" id="vb">${vs.map((v,k)=>`<button type="button" data-v="${k}">${esc(v[0])}</button>`).join("")}</div>`:""}
+ ${cs.length?`<span class="lab">Color: <span id="cn2"></span></span><div class="sws" id="sws">${cs.map((c,k)=>`<button type="button" data-c="${k}" style="background:${esc(c[1])}" aria-label="${esc(c[0])}" title="${esc(c[0])}"></button>`).join("")}</div>`:""}
+ <h4>Key features</h4><ul>${feats.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>
+ <h4>Specifications</h4><table class="sp">${specRows(p).map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table>
+ <div class="qty"><button type="button" id="qm" aria-label="Less">−</button><span id="qv" style="min-width:24px;text-align:center">1</span><button type="button" id="qp" aria-label="More">+</button></div>
+ <div class="acts"><button class="btn ghost" id="ba" type="button"${ok?"":" disabled"}>Add to Cart</button><button class="btn" id="bb" type="button"${ok?"":" disabled"}>${ok?"Buy Now":"Out of stock"}</button></div></div></div>`;
+ const paint=()=>{const V=views();if(vw>=V.length)vw=0;D("gm").innerHTML=pic(V[vw]);D("th").innerHTML=V.map((v,k)=>`<button type="button" data-w="${k}" aria-pressed="${k==vw}">${th(v)}${esc(v.t)}</button>`).join("");
+  D("pp").innerHTML=money(pr())+`<small>${["PKR","USD","INR"].filter(c=>c!=cc).map(c=>"≈ "+money(pr(),c)).join(" · ")} (approximate)</small>`;
+  d.querySelectorAll("#sb button").forEach((b,k)=>b.setAttribute("aria-pressed",k==st));d.querySelectorAll("#vb button").forEach((b,k)=>b.setAttribute("aria-pressed",k==sv));d.querySelectorAll("#sws button").forEach((b,k)=>b.setAttribute("aria-pressed",k==sc));if(cs[sc])D("cn2").textContent=cs[sc][0]};
+ d.onclick=e=>{const b=e.target.closest("button");if(!b)return;const k=b.dataset;if(k.w!=null){vw=+k.w;paint()}if(k.st!=null){st=+k.st;paint()}if(k.v!=null){sv=+k.v;paint()}if(k.c!=null){sc=+k.c;vw=0;paint()}};
+ D("qm").onclick=()=>{q=Math.max(1,q-1);D("qv").textContent=q};D("qp").onclick=()=>{q=Math.min(20,q+1);D("qv").textContent=q};
+ D("ba").onclick=()=>{addCart(id,sv,sc,q,st);toast(p.name+" added to cart");d.close()};D("bb").onclick=()=>buyNow(id,sv,sc,q,st);
+ paint();d.showModal()}
+function openCart(){const d=D("dCart");
+ d.innerHTML=`<button class="x" data-x aria-label="Close">×</button><div class="pad"><h2>Your cart</h2>`+(cart.length?cart.map(c=>`<div class="ci"><div><b>${esc(iname(c))}</b><br><small>${money(unit(c))} each</small><div class="qty"><button data-a="dec" data-k="${ck(c)}" aria-label="Less">−</button><span>${c.q}</span><button data-a="inc" data-k="${ck(c)}" aria-label="More">+</button></div></div><div><b>${money(unit(c)*c.q)}</b><br><button data-a="rm" data-k="${ck(c)}" style="background:none;border:0;color:#ff8a8a;cursor:pointer">Remove</button></div></div>`).join("")+`<div class="tot"><span>Total</span><span>${money(total())}</span></div><button class="btn" id="go" type="button" style="width:100%">Checkout</button>`:`<p class="mut">Your cart is empty. Tap a product to add it.</p>`)+`</div>`;
+ if(!d.open)d.showModal();const g=D("go");if(g)g.onclick=()=>{d.close();openCheckout()}}
+D("dCart").addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const c=cart.find(x=>ck(x)==b.dataset.k);if(!c)return;
+ if(b.dataset.a=="inc")c.q=Math.min(20,c.q+1);if(b.dataset.a=="dec")c.q--;if(b.dataset.a=="rm"||c.q<1)cart=cart.filter(x=>x!==c);saveCart();openCart()});
+D("cb").onclick=openCart;saveCart();
+/* ---- checkout and receipt ---- */
+function openCheckout(){if(!cart.length){toast("Your cart is empty");return}
+ D("osum").innerHTML=`<div class="rl">${cart.map(c=>`<div><span>${esc(iname(c))} × ${c.q}</span><span>${money(unit(c)*c.q)}</span></div>`).join("")}<div><b>Total</b><b>${money(total())}</b></div></div>`;D("oerr").textContent="";D("dOut").showModal()}
+const waMsg=o=>"New order "+o.id+"\nName: "+o.name+"\nPhone: "+o.phone+"\nCity: "+o.city+"\nAddress: "+o.addr+"\nPayment: "+o.pay+"\n"+o.items.map(x=>"- "+x.n+" x"+x.q).join("\n")+"\nTotal: Rs "+o.total.toLocaleString("en-PK");
+D("fo").onsubmit=e=>{e.preventDefault();const f=e.target,name=f.cn.value.trim(),ph=f.cp.value.trim(),ad=f.ca.value.trim();
+ if(name.length<2||ph.replace(/\D/g,"").length<10||ad.length<6){D("oerr").textContent="Please enter your name, a valid phone number and your full address.";return}
+ const o={id:"ALZ-"+Date.now().toString(36).toUpperCase().slice(-6),time:new Date().toISOString(),name,phone:ph,city:f.cl.value,addr:ad,pay:f.pm.value,status:"Received",total:total(),items:cart.map(c=>({n:iname(c),q:c.q,pr:unit(c)}))};
+ const all=ls.g("alz_orders",[]);all.unshift(o);ls.s("alz_orders",all);cart=[];saveCart();f.reset();D("dOut").close();badge();receipt(o)};
+function receipt(o){const d=D("dRcpt");
+ d.innerHTML=`<button class="x" data-x aria-label="Close">×</button><div class="pad rc"><div class="ok">✓</div><h2>Order placed</h2><p class="mut">Order accepted. We’ll call you to confirm delivery.</p><div class="id">${o.id}</div>
+ <div class="rl">${o.items.map(x=>`<div><span>${esc(x.n)} × ${x.q}</span><span>${money(x.pr*x.q)}</span></div>`).join("")}<div><b>Total</b><b>${money(o.total)}</b></div><div><span>Payment</span><span>${esc(o.pay)}</span></div><div><span>Deliver to</span><span>${esc(o.name)}, ${esc(o.city)}</span></div></div>
+ <div class="acts" style="justify-content:center"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${wa()}?text=${encodeURIComponent(waMsg(o))}">Send to shop on WhatsApp</a><button class="btn ghost" type="button" onclick="window.print()">Print receipt</button></div></div>`;d.showModal()}
+/* ---- admin: orders, products, settings ---- */
+const getO=()=>ls.g("alz_orders",[]);
+function badge(){D("ab").textContent=getO().filter(o=>o.status=="Received").length||""}
+let at="orders",edit=null;
+const dl=async(name,text,type)=>{try{if(typeof claude!=="undefined"){const d=await claude.use("downloads");if(!d){toast("Saving files is not available here");return}await d.save({filename:name,data:text});return}}catch(e){if(e&&e.code=="declined")return;toast("Could not save the file");return}
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click()};
+function tOrders(){const O=getO(),rev=O.filter(o=>o.status!="Cancelled").reduce((a,o)=>a+o.total,0);
+ return `<div class="st"><div><b>${O.length}</b>Orders</div><div><b>${O.filter(o=>o.status=="Received").length}</b>New (Order Received)</div><div><b>Rs ${rev.toLocaleString("en-PK")}</b>Revenue</div></div>
+ <div class="acts" style="margin:0 0 16px"><button class="btn ghost" id="ex" type="button">Export CSV</button><button class="btn ghost" id="cl" type="button">Clear all</button></div>`+
+ (O.length?O.map((o,k)=>`<div class="od"><header><b>${esc(o.id)} · ${new Date(o.time).toLocaleString("en-PK")}</b><select data-s="${k}" aria-label="Status">${["Received","Accepted","Shipped","Delivered","Cancelled"].map(s=>`<option${s==o.status?" selected":""}>${s}</option>`).join("")}</select></header>
+ <div>${esc(o.name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></div><div class="mut">${esc(o.addr)}, ${esc(o.city)} · ${esc(o.pay)}</div>
+ <div>${o.items.map(x=>esc(x.n)+" × "+x.q).join("<br>")}</div><div><b>Total: Rs ${o.total.toLocaleString("en-PK")}</b> <button class="sm red" data-d="${k}" type="button">Delete</button></div></div>`).join(""):`<p class="mut">No orders yet. New orders appear here as soon as customers place them.</p>`)}
+function tProducts(){if(edit)return prodForm(edit=="new"?null:prod(edit));
+ return `<div class="acts" style="margin:0 0 12px"><button class="btn" data-new type="button">+ Add new product</button></div>`+BR.map(b=>PR.filter(p=>p.brand==b[0]).map(p=>`<div class="pl"><div><b>${esc(p.name)}</b> <small>${esc(BN(p.brand))} · ${money(p.price)}${p.vars&&p.vars.length?" · "+p.vars.length+" options":""} · ${p.stock===false?"Out of stock":"In stock"}</small></div><div><button class="sm" data-stk="${p.id}" type="button">${p.stock===false?"Mark in stock":"Mark sold out"}</button> <button class="sm" data-e="${p.id}" type="button">Edit</button> <button class="sm red" data-pd="${p.id}" type="button">Delete</button></div></div>`).join("")).join("")}
+const txV=a=>(a||[]).map(v=>v.join("|")).join("\n"),txC=a=>(a||[]).map(c=>c[2]?c.join("|"):c[0]+"|"+c[1]).join("\n");
+function prodForm(p){p=p||{brand:"Apple",kind:"phone",acc:"#2b4cff",stock:true,price:"",name:"",specs:"",feat:"",vars:[],cols:[],stat:[],imgs:[],box:""};
+ return `<h3>${p.id?"Edit product":"Add new product"}</h3><form id="pf" class="fg2">
+ <label>Brand<select name="br">${BR.map(b=>`<option value="${b[0]}"${b[0]==p.brand?" selected":""}>${BN(b[0])}</option>`).join("")}</select></label>
+ <label>Product name<input name="nm" required value="${esc(p.name)}"></label>
+ <label>Category<select name="kd">${KINDS.map(k=>`<option value="${k[0]}"${k[0]==p.kind?" selected":""}>${k[1]}</option>`).join("")}</select></label>
+ <label>Base price (PKR)<input name="pr" type="number" min="0" required value="${esc(p.price)}"></label>
+ <label>Stock status<select name="st"><option value="in"${p.stock!==false?" selected":""}>In stock</option><option value="out"${p.stock===false?" selected":""}>Out of stock</option></select></label>
+ <label>Accent color (for drawings)<input name="ac" type="color" value="${esc(p.acc)}"></label>
+ <label class="w">Specifications (one per line, “Label: value”)<textarea name="sp">${esc(p.specs)}</textarea></label>
+ <label class="w">Key features (one per line, optional)<textarea name="ft">${esc(p.feat)}</textarea></label>
+ <label class="w">RAM / storage options (one per line: label|extra price in PKR)<textarea name="vr" placeholder="256GB|0&#10;512GB|80000&#10;1TB|160000">${esc(txV(p.vars))}</textarea></label>
+ <label class="w">Colors (one per line: name|#hex|optional image link)<textarea name="cl" placeholder="Space Black|#1b1b1f&#10;Silver|#d9dce1">${esc(txC(p.cols))}</textarea></label>
+ <label class="w">Condition options (label|price change in PKR, e.g. PTA Approved|0 and Non-PTA|-120000)<textarea name="sx">${esc(txV(p.stat))}</textarea></label>
+ <label class="w">Product photo links (one per line)<textarea name="im">${esc((p.imgs||[]).join("\n"))}</textarea></label>
+ <label class="w">Or upload photos from your device<input type="file" accept="image/*" multiple data-up="im"></label>
+ <label class="w">Packaging photo link<input name="bx" value="${esc(p.box||"")}"></label>
+ <label class="w">Or upload packaging photo<input type="file" accept="image/*" data-up="bx"></label>
+ <div class="acts w"><button class="btn" type="submit">Save product</button><button class="btn ghost" data-cancel type="button">Cancel</button></div></form>`}
+function tSettings(){return `<div class="fg"><label>Admin PIN<input id="sp1" value="${esc(ls.g("alz_pin","1234"))}"></label><label>WhatsApp number for orders (with country code, no +)<input id="sp2" value="${esc(wa())}"></label>
+ <div class="acts"><button class="btn" id="sv" type="button">Save settings</button><button class="btn ghost" id="bk" type="button">Download backup</button><label class="btn ghost" style="margin:0;cursor:pointer">Restore backup<input id="imp" type="file" accept=".json" hidden></label><button class="btn ghost" id="rs" type="button">Reset products to defaults</button></div>
+ <small class="mut">Products and orders are saved in this browser only. Download a backup regularly.</small></div>`}
+function renderAdmin(){const d=D("dAdmin");d.innerHTML=`<button class="x" data-x aria-label="Close">×</button><div class="pad"><div class="tabs">${[["orders","Orders"],["products","Products"],["settings","Settings"]].map(t=>`<button type="button" data-t="${t[0]}" aria-pressed="${at==t[0]}">${t[1]}</button>`).join("")}</div>${at=="orders"?tOrders():at=="products"?tProducts():tSettings()}</div>`;if(!d.open)d.showModal()}
+const shrink=f=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,900/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",.8))};i.onerror=()=>r("");i.src=fr.result};fr.readAsDataURL(f)});
+const parseV=t=>t.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(a=>[a[0],+a[1]||0]);
+const parseC=t=>t.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(a=>[a[0],/^#[0-9a-f]{3,8}$/i.test(a[1]||"")?a[1]:"#888888",a[2]||""]);
+const A=D("dAdmin");
+A.addEventListener("click",e=>{const t=e.target,k=t.dataset,O=getO();
+ if(k.t){at=k.t;edit=null;renderAdmin()}
+ if(k.new!=null){edit="new";renderAdmin()}if(k.e){edit=k.e;renderAdmin()}if(k.cancel!=null){edit=null;renderAdmin()}
+ if(k.stk){const p=prod(k.stk);p.stock=p.stock===false;savePR();renderGrid();renderAdmin()}
+ if(k.pd&&confirm("Delete this product?")){PR=PR.filter(p=>p.id!=k.pd);savePR();renderGrid();saveCart();renderAdmin()}
+ if(k.d!=null&&confirm("Delete this order?")){O.splice(+k.d,1);ls.s("alz_orders",O);badge();renderAdmin()}
+ if(t.id=="cl"&&confirm("Delete ALL orders?")){ls.s("alz_orders",[]);badge();renderAdmin()}
+ if(t.id=="ex"){const q=v=>'"'+String(v).replace(/"/g,'""')+'"';dl("orders.csv",[["Order ID","Time","Status","Name","Phone","City","Address","Payment","Items","Total PKR"],...O.map(o=>[o.id,o.time,o.status,o.name,o.phone,o.city,o.addr,o.pay,o.items.map(x=>x.n+" x"+x.q).join("; "),o.total])].map(r=>r.map(q).join(",")).join("\n"),"text/csv")}
+ if(t.id=="sv"){ls.s("alz_pin",D("sp1").value.trim()||"1234");ls.s("alz_wa",D("sp2").value.replace(/\D/g,"")||"923291034308");toast("Settings saved")}
+ if(t.id=="bk")dl("alizay-backup.json",JSON.stringify({products:PR,orders:O}),"application/json");
+ if(t.id=="rs"&&confirm("Replace all products with the original catalog?")){PR=JSON.parse(JSON.stringify(DEFAULTS));savePR();renderGrid();saveCart();toast("Products reset")}});
+A.addEventListener("change",async e=>{const t=e.target;
+ if(t.dataset.s!=null){const O=getO();O[+t.dataset.s].status=t.value;ls.s("alz_orders",O);badge();renderAdmin()}
+ if(t.dataset.up){const f=t.form;for(const file of t.files){const u=await shrink(file);if(!u)continue;t.dataset.up=="bx"?f.bx.value=u:f.im.value+=(f.im.value?"\n":"")+u}t.value="";toast("Photo added. Press Save product.")}
+ if(t.id=="imp"&&t.files[0]){try{const j=JSON.parse(await t.files[0].text());if(!Array.isArray(j.products))throw 0;PR=j.products;savePR();if(Array.isArray(j.orders))ls.s("alz_orders",j.orders);renderGrid();saveCart();badge();toast("Backup restored")}catch(x){alert("That file is not a valid backup.")}}});
+A.addEventListener("submit",e=>{if(e.target.id!="pf")return;e.preventDefault();const f=e.target;
+ const o={id:edit&&edit!="new"?edit:"p"+Date.now().toString(36),brand:f.br.value,name:f.nm.value.trim(),kind:f.kd.value,price:Math.max(0,+f.pr.value||0),stock:f.st.value=="in",acc:f.ac.value,specs:f.sp.value.trim(),feat:f.ft.value.trim(),vars:parseV(f.vr.value),stat:parseV(f.sx.value),cols:parseC(f.cl.value),imgs:f.im.value.split("\n").map(x=>x.trim()).filter(Boolean),box:f.bx.value.trim()};
+ if(!o.name){alert("Please enter a product name.");return}
+ const k=PR.findIndex(p=>p.id==o.id);k>=0?PR[k]=o:PR.push(o);
+ if(!savePR())return;edit=null;renderGrid();saveCart();renderAdmin();toast("Product saved")});
+D("adm").onclick=()=>{D("perr").textContent="";D("fp").reset();D("dPin").showModal()};
+D("fp").onsubmit=e=>{e.preventDefault();if(String(e.target.pin.value)==String(ls.g("alz_pin","1234"))){D("dPin").close();at="orders";edit=null;renderAdmin()}else D("perr").textContent="Wrong PIN."};
+window.addEventListener("storage",e=>{if(e.key=="alz_orders"){badge();if(D("dAdmin").open&&at=="orders")renderAdmin();toast("New order update received")}if(e.key=="alz_products"){PR=ls.g("alz_products",PR);renderGrid()}if(e.key=="alz_cart"){cart=ls.g("alz_cart",[]);saveCart()}});
+renderGrid();badge();
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),2400)}
+$("#sw").onclick=e=>{const b=e.target.closest("button");if(!b)return;
+ document.documentElement.style.setProperty("--c1",b.dataset.a);document.documentElement.style.setProperty("--c2",b.dataset.b);
+ $("#sw").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x==b))};
+$("#burger").onclick=()=>$("#menu").classList.toggle("open");
+$("#menu").onclick=e=>{if(e.target.tagName=="A")$("#menu").classList.remove("open")};
+$("#form").onsubmit=e=>{e.preventDefault();const f=e.target;
+ if(!f.n.value.trim()||!f.e.value.trim()){toast("Please add your name and a way to reach you");return}
+ f.reset();toast("Message sent. We’ll reply today.")};
+</script>
+</body>
+</html>
